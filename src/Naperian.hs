@@ -271,6 +271,10 @@ transposeH :: Hyper (f : (g : fs)) a
            -> Hyper (g : (f : fs)) a
 transposeH (Prism (Prism x)) = Prism (Prism (fmap transpose x))
 
+transposeH' :: Hyper (f : (g : (h : fs))) a ->
+               Hyper (f : (h : (g : fs))) a
+transposeH' (Prism (Prism (Prism x))) = Prism (Prism (Prism (fmap transpose x)))
+
 -- | Fold over a single dimension of a Hypercuboid.
 foldrH :: (a -> a -> a) -> a -> Hyper (f : fs) a -> Hyper fs a
 foldrH f z (Prism x) = fmap (foldr f z) x
