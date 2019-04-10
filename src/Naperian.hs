@@ -258,6 +258,9 @@ instance Shapely fs => Applicative (Hyper fs) where
   pure  = hreplicate
   (<*>) = hzipWith ($)
 
+hLookup :: Hyper (f : fs) a -> Log f -> Hyper fs a
+hLookup (Prism x) i = fmap (flip lookup i) x
+
 hzipWith :: (a -> b -> c) -> Hyper fs a -> Hyper fs b -> Hyper fs c
 hzipWith f (Scalar a) (Scalar b) = Scalar (f a b)
 hzipWith f (Prism x)  (Prism y)  = Prism (hzipWith (azipWith f) x y)
